@@ -1,0 +1,22 @@
+#!/bin/bash
+
+#SBATCH -p dl
+#SBATCH --gres=gpu:v100:2
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=12
+#SBATCH --time=2-00:00:00
+#SBATCH -o english_out_%j.out
+#SBATCH -e english_error_%j.err
+#SBATCH --mail-user=anakuzne@iu.edu
+#SBATCH --mail-type=ALL
+#SBATCH -J Simple_RNN
+
+module load deeplearning/1.13.1
+module load libsndfile/1.0.28
+cd /N/u/anakuzne/Carbonate/accent/py
+
+python speech_preproc.py -d '/N/u/anakuzne/Carbonate/dl_for_speech/HW3_II/IEEE/mapping_dicts' -t '/N/u/anakuzne/Carbonate/dl_for_speech/HW3_II/IEEE/npy/train_frame'
+
+
+#sbatch
+#squeue -anakuzne

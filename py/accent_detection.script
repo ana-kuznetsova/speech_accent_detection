@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#SBATCH -p dl
+#SBATCH --gres=gpu:v100:2
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=12
+#SBATCH --time=2-00:00:00
+#SBATCH -o english_out_%j.out
+#SBATCH -e english_error_%j.err
+#SBATCH --mail-user=anakuzne@iu.edu
+#SBATCH --mail-type=ALL
+#SBATCH -J Simple_RNN
+
+module load deeplearning/1.13.1
+module load libsndfile/1.0.28
+cd /N/u/anakuzne/Carbonate/accent/py
+
+python train_rnn.py -h 25 -w 50 -t '/N/u/anakuzne/Carbonate/accent/spa_data/train.tsv' -p '/N/u/anakuzne/Carbonate/accent/spa_data/test.tsv' -n 10
+
+#sbatch
+#squeue -anakuzne
